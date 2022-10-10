@@ -24,6 +24,31 @@ class CompleteFormState extends State<LoginScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
+            TextField(
+              decoration: InputDecoration(
+                labelText: "Idade", //babel text
+                border: OutlineInputBorder(),
+                hintText: 'Digite sua idade',
+              ),
+            ),
+            TextField(
+              decoration: InputDecoration(
+                labelText: "Altura", //babel text
+                border: OutlineInputBorder(),
+                hintText: 'Digite sua altura',
+              ),
+            ),
+            TextField(
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: "Peso", //babel text
+                hintText: 'Digite seu peso',
+              ),
+            ),
+            const Text(
+              'Selecione seu sexo',
+              style: TextStyle(fontSize: 17.0),
+            ),
             ListTile(
               title: const Text('Masculino'),
               leading: Radio<String>(
@@ -70,7 +95,7 @@ class CompleteFormState extends State<LoginScreen> {
                       );
                     }
                   },
-                  child: const Text('Enviar'),
+                  child: const Text('Montar treino'),
                 ),
                 //    ElevatedButton(
                 //    onPressed: () {

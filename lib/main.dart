@@ -2,10 +2,10 @@
 import 'package:trabalho01/screens/main2.dart';
 import 'package:trabalho01/screens/tela_leo.dart';
 import 'package:trabalho01/screens/tela_bruno.dart';
-import 'package:trabalho01/screens/tela_login.dart';
+import 'package:trabalho01/screens/tela_infos.dart';
 import 'package:flutter/material.dart';
 import 'package:trabalho01/screens/tela_monta_dieta.dart';
-import 'package:trabalho01/screens/tela_monta_treino.dart';
+import 'package:trabalho01/screens/tela_maps.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(const MyApp());
@@ -58,7 +58,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 alignment: Alignment.center,
                 padding: const EdgeInsets.all(10),
                 child: const Text(
-                  'Sign in',
+                  'Login',
                   style: TextStyle(fontSize: 20),
                 )),
             Container(
@@ -67,7 +67,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 controller: nameController,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'User Name',
+                  labelText: 'Nome de usuário',
                 ),
               ),
             ),
@@ -78,7 +78,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 controller: passwordController,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Password',
+                  labelText: 'Senha',
                 ),
               ),
             ),
@@ -87,7 +87,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 //forgot password screen
               },
               child: const Text(
-                'Forgot Password',
+                'Esqueci a senha',
               ),
             ),
             Container(
@@ -104,10 +104,10 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 )),
             Row(
               children: <Widget>[
-                const Text('Does not have account?'),
+                const Text('Não tem uma conta?'),
                 TextButton(
                   child: const Text(
-                    'Sign in',
+                    'Entrar',
                     style: TextStyle(fontSize: 20),
                   ),
                   onPressed: () {

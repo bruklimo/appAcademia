@@ -2,7 +2,7 @@
     package="com.example.e_forms_intro">
    <application
         
-        android:label="e_forms_intro"
+        android:label="app academia"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
