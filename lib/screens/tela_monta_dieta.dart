@@ -9,12 +9,13 @@ class MontaDieta extends StatefulWidget {
   State<MontaDieta> createState() => CompleteFormState();
 }
 
-final titles = ["Dieta 1", "Dieta 2", "Dieta 3"];
-final subtitles = ["2600 kcal", "2000 kcal", "1500 kcal"];
+final titles = ["Selecione a sua dieta", "Dieta 1", "Dieta 2", "Dieta 3"];
+final subtitles = ["Clique abaixo", "2600 kcal", "2000 kcal", "1500 kcal"];
 final icons = [
   Icons.sports_gymnastics,
   Icons.sports_gymnastics,
-  Icons.sports_gymnastics
+  Icons.sports_gymnastics,
+  Icons.sports_gymnastics,
 ];
 
 class CompleteFormState extends State<MontaDieta> {
