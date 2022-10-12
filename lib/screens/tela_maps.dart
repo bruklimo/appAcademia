@@ -36,7 +36,7 @@ class CompleteFormState extends State<MontaTreino> {
       home: Scaffold(
         appBar: AppBar(
           title: const Text('Academias Próximas'),
-          backgroundColor: Colors.green[700],
+          backgroundColor: Colors.blue,
         ),
         body: GoogleMap(
           onMapCreated: _onMapCreated,

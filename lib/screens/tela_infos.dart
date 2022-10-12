@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:trabalho01/model/user.dart';
 import 'package:email_validator/email_validator.dart';
@@ -13,7 +14,7 @@ String? _character;
 
 class CompleteFormState extends State<LoginScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final User _newUser = User();
+  //final User _newUser = User();
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +25,8 @@ class CompleteFormState extends State<LoginScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
+            const Text("Gostaríamos de saber algumas informações sobre você:\n",
+                style: TextStyle(fontSize: 20, fontFamily: 'Arial')),
             TextField(
               decoration: InputDecoration(
                 labelText: "Idade", //babel text
@@ -46,13 +49,13 @@ class CompleteFormState extends State<LoginScreen> {
               ),
             ),
             const Text(
-              'Selecione seu sexo',
-              style: TextStyle(fontSize: 17.0),
+              'Selecione seu sexo:\n',
+              style: TextStyle(fontSize: 20, fontFamily: 'Arial'),
             ),
             ListTile(
               title: const Text('Masculino'),
               leading: Radio<String>(
-                value: "masculino",
+                value: "Masculino",
                 groupValue: _character,
                 onChanged: (value) {
                   setState(() {
@@ -64,7 +67,7 @@ class CompleteFormState extends State<LoginScreen> {
             ListTile(
               title: const Text('Feminino'),
               leading: Radio<String>(
-                value: "feminino",
+                value: "Feminino",
                 groupValue: _character,
                 onChanged: (value) {
                   setState(() {
@@ -82,7 +85,7 @@ class CompleteFormState extends State<LoginScreen> {
                       _formKey.currentState?.save();
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          backgroundColor: Colors.green,
+                          backgroundColor: Colors.blue,
                           duration: const Duration(seconds: 10),
                           content: Text(
                               "Bem vindo!\nSeu sexo é  ${_character.toString().characters}"),
@@ -95,7 +98,7 @@ class CompleteFormState extends State<LoginScreen> {
                       );
                     }
                   },
-                  child: const Text('Montar treino'),
+                  child: const Text('Monta treino'),
                 ),
                 //    ElevatedButton(
                 //    onPressed: () {

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "50472289192",
+    "project_id": "app-academia-4e293",
+    "storage_bucket": "app-academia-4e293.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:50472289192:android:a198d9af819f92f1bc539d",
+        "android_client_info": {
+          "package_name": "com.example.e_forms_intro"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "50472289192-vfl46kef63htlgv47v8soov8ba78j1dj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.e_forms_intro",
+            "certificate_hash": "a30f9c1ef42047663414c8892986a154f429b883"
+          }
+        },
+        {
+          "client_id": "50472289192-7thmc9s5804seg1vvjsb92o3hrslacnb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-hfu8bDPAyivrGsXGxrc_xa5I_x627jk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "50472289192-7thmc9s5804seg1vvjsb92o3hrslacnb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

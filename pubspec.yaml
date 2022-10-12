@@ -44,6 +44,9 @@ dependencies:
   google_maps_flutter: ^2.2.1
   http: ^0.13.5
   json_serializable: ^6.4.1
+  firebase_core:
+  firebase_auth:
+  google_sign_in:
 
 dev_dependencies:
   flutter_test:
@@ -78,6 +81,7 @@ flutter:
   assets:
     - assets/images/
     - assets/locations.json
+    - assets/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
