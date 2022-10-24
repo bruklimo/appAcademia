@@ -1,11 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.e_forms_intro">
-<<<<<<< HEAD
-    <uses-permission android:name="android.permission.INTERNET" />
-=======
 <uses-permission android:name="android.permission.INTERNET" />
 
->>>>>>> 0fb0d003d33211b97a9412c9e7c536148ffb9cf5
    <application
         
         android:label="app academia"

@@ -46,14 +46,7 @@ dependencies:
   json_serializable: ^6.4.1
   firebase_core:
   firebase_auth:
-<<<<<<< HEAD
-  google_sign_in: 
-  sqflite: any
-  path_provider: any
-
-=======
   google_sign_in:
->>>>>>> 0fb0d003d33211b97a9412c9e7c536148ffb9cf5
 
 dev_dependencies:
   flutter_test:
