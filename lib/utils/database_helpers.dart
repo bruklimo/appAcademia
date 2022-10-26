@@ -39,37 +39,41 @@ class DatabaseHelper {
   // SQL string to create the database
   Future _onCreate(Database db, int version) async {
     await db.execute('''
-          CREATE TABLE $tableWords (
+          CREATE TABLE $infos (
             $columnId INTEGER PRIMARY KEY,
-            $columnWord TEXT NOT NULL,
-            $columnFrequency INTEGER NOT NULL
+            $columnIdade TEXT ,
+            $columnAltura TEXT ,
+            $columnPeso TEXT ,
+            $columnSexo TEXT 
           )
           ''');
   }
 
   // Database helper methods:
 
-  Future<int> insert(Word word) async {
+  Future<int> insert(
+      String idade, String altura, String peso, String sexo) async {
     Database db = await database;
-    int id = await db.insert(tableWords, word.toMap());
+    int id = await db.insert(infos, Info);
     return id;
   }
 
+/*
   Future<Word?> queryWord(int id) async {
     Database db = await database;
-    List<Map<String, dynamic>> maps = await db.query(tableWords,
+    List<Map<String, dynamic>> maps = await db.query(infos,
         columns: [columnId, columnWord, columnFrequency],
         where: '$columnId = ?',
         whereArgs: [id]);
     if (maps.isNotEmpty) {
-      return Word.fromMap(maps.first);
+      return Info.fromMap(maps.first);
     }
     return null;
   }
 
   Future<List<Word>?> queryAllWords() async {
     Database db = await database;
-    List<Map<String, dynamic>> maps = await db.query(tableWords);
+    List<Map<String, dynamic>> maps = await db.query(infos);
     if (maps.length > 0) {
       List<Word> words = [];
       maps.forEach((map) => words.add(Word.fromMap(map)));
@@ -77,15 +81,9 @@ class DatabaseHelper {
     }
     return null;
   }
-
+*/
   Future<int> deleteWord(int id) async {
     Database db = await database;
-    return await db.delete(tableWords, where: '$columnId = ?', whereArgs: [id]);
-  }
-
-  Future<int> update(Word word) async {
-    Database db = await database;
-    return await db.update(tableWords, word.toMap(),
-        where: '$columnId = ?', whereArgs: [word.id]);
+    return await db.delete(infos, where: '$columnId = ?', whereArgs: [id]);
   }
 }

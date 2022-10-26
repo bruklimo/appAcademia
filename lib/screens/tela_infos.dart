@@ -2,6 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:trabalho01/model/user.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:trabalho01/utils/database_helpers.dart';
+import 'package:trabalho01/utils/model.dart';
+import 'dart:developer';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -14,6 +17,10 @@ String? _character;
 
 class CompleteFormState extends State<LoginScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  TextEditingController idadeController = new TextEditingController();
+  TextEditingController alturaController = new TextEditingController();
+  TextEditingController pesoController = new TextEditingController();
   //final User _newUser = User();
 
   @override
@@ -28,6 +35,7 @@ class CompleteFormState extends State<LoginScreen> {
             const Text("Gostaríamos de saber algumas informações sobre você:\n",
                 style: TextStyle(fontSize: 20, fontFamily: 'Arial')),
             TextField(
+              controller: idadeController,
               decoration: InputDecoration(
                 labelText: "Idade", //babel text
                 border: OutlineInputBorder(),
@@ -35,6 +43,7 @@ class CompleteFormState extends State<LoginScreen> {
               ),
             ),
             TextField(
+              controller: alturaController,
               decoration: InputDecoration(
                 labelText: "Altura", //babel text
                 border: OutlineInputBorder(),
@@ -42,6 +51,7 @@ class CompleteFormState extends State<LoginScreen> {
               ),
             ),
             TextField(
+              controller: pesoController,
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: "Peso", //babel text
@@ -97,6 +107,7 @@ class CompleteFormState extends State<LoginScreen> {
                         ),
                       );
                     }
+                    _add();
                   },
                   child: const Text('Monta treino'),
                 ),
@@ -112,5 +123,34 @@ class CompleteFormState extends State<LoginScreen> {
         ),
       ),
     );
+  }
+
+  /*List<Info> words = [];
+  _read() async {
+    log('Read Complete Data');
+    DatabaseHelper helper = DatabaseHelper.instance;
+    List<Info>? temp = await helper.queryAllWords();
+    setState(() {
+      words = temp ?? [];
+    });
+  }
+  */
+  /*
+
+  _delete(int id) async {
+    // delete one word
+    DatabaseHelper helper = DatabaseHelper.instance;
+    log('Delete Data from id: $id');
+    await helper.deleteWord(id);
+    _read();
+  }
+  */
+
+  _add() async {
+    // insert
+    DatabaseHelper helper = DatabaseHelper.instance;
+    log('User data added');
+    helper.insert(idadeController.text, alturaController.text,
+        pesoController.text, _character.toString().characters.toString());
   }
 }
