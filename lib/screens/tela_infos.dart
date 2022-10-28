@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:trabalho01/model/user.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:trabalho01/utils/database_helpers.dart';
-import 'package:trabalho01/utils/model.dart';
 import 'dart:developer';
 
 class LoginScreen extends StatefulWidget {
@@ -14,6 +13,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 String? _character;
+List<Map<String, dynamic>> _journals = [];
+bool _isLoading = true;
 
 class CompleteFormState extends State<LoginScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -21,6 +22,7 @@ class CompleteFormState extends State<LoginScreen> {
   TextEditingController idadeController = new TextEditingController();
   TextEditingController alturaController = new TextEditingController();
   TextEditingController pesoController = new TextEditingController();
+  TextEditingController sexoController = new TextEditingController();
   //final User _newUser = User();
 
   @override
@@ -107,7 +109,7 @@ class CompleteFormState extends State<LoginScreen> {
                         ),
                       );
                     }
-                    _add();
+                    _addItem();
                   },
                   child: const Text('Monta treino'),
                 ),
@@ -146,11 +148,27 @@ class CompleteFormState extends State<LoginScreen> {
   }
   */
 
-  _add() async {
-    // insert
-    DatabaseHelper helper = DatabaseHelper.instance;
-    log('User data added');
-    helper.insert(idadeController.text, alturaController.text,
+  // Insert a new journal to the database
+  Future<void> _addItem() async {
+    await SQLHelper.createItem(idadeController.text, alturaController.text,
         pesoController.text, _character.toString().characters.toString());
+    _refreshJournals();
+  }
+
+  void _refreshJournals() async {
+    final data = await SQLHelper.getItems();
+    setState(() {
+      _journals = data;
+      _isLoading = false;
+    });
+  }
+
+// Delete an item
+  void _deleteItem(int id) async {
+    await SQLHelper.deleteItem(id);
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      content: Text('Successfully deleted a journal!'),
+    ));
+    _refreshJournals();
   }
 }

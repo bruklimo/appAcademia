@@ -1,89 +1,80 @@
-// needed for Directory()
-import 'dart:io';
-// needed for SQL database operations
-import 'package:sqflite/sqflite.dart';
-// needed for getApplicationDocumentsDirectory()
-import 'package:path_provider/path_provider.dart';
+import 'package:flutter/foundation.dart';
+import 'package:sqflite/sqflite.dart' as sql;
 
-import 'model.dart';
+class SQLHelper {
+  static Future<void> createTables(sql.Database database) async {
+    await database.execute("""CREATE TABLE infos(
+        id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+        idade TEXT,
+        altura TEXT,
+        peso TEXT,
+        sexo TEXT
+      )
+      """);
+  }
+// id: the id of a item
+// title, description: name and description of your activity
+// created_at: the time that the item was created. It will be automatically handled by SQLite
 
-// singleton class to manage the database
-class DatabaseHelper {
-  // This is the actual database filename that is saved in the docs directory.
-  static final _databaseName = "MyDatabase.db";
-  // Increment this version when you need to change the schema.
-  static final _databaseVersion = 1;
-
-  // Make this a singleton class.
-  DatabaseHelper._privateConstructor();
-  static final DatabaseHelper instance = DatabaseHelper._privateConstructor();
-
-  // Only allow a single open connection to the database.
-  static Database? _database;
-  Future<Database> get database async {
-    if (_database != null) return _database!;
-    _database = await _initDatabase();
-    return _database!;
+  static Future<sql.Database> db() async {
+    return sql.openDatabase(
+      'kindacode.db',
+      version: 1,
+      onCreate: (sql.Database database, int version) async {
+        await createTables(database);
+      },
+    );
   }
 
-  // open the database
-  _initDatabase() async {
-    // The path_provider plugin gets the right directory for Android or iOS.
-    Directory documentsDirectory = await getApplicationDocumentsDirectory();
-    String path = '${documentsDirectory.path}/$_databaseName';
-    // Open the database, can also add an onUpdate callback parameter.
-    return await openDatabase(path,
-        version: _databaseVersion, onCreate: _onCreate);
-  }
+  // Create new item (journal)
+  static Future<int> createItem(
+      String idade, String? altura, String peso, String sexo) async {
+    final db = await SQLHelper.db();
 
-  // SQL string to create the database
-  Future _onCreate(Database db, int version) async {
-    await db.execute('''
-          CREATE TABLE $infos (
-            $columnId INTEGER PRIMARY KEY,
-            $columnIdade TEXT ,
-            $columnAltura TEXT ,
-            $columnPeso TEXT ,
-            $columnSexo TEXT 
-          )
-          ''');
-  }
-
-  // Database helper methods:
-
-  Future<int> insert(
-      String idade, String altura, String peso, String sexo) async {
-    Database db = await database;
-    int id = await db.insert(infos, Info);
+    final data = {'idade': idade, 'altura': altura, 'peso': peso, 'sexo': sexo};
+    final id = await db.insert('infos', data,
+        conflictAlgorithm: sql.ConflictAlgorithm.replace);
     return id;
   }
 
-/*
-  Future<Word?> queryWord(int id) async {
-    Database db = await database;
-    List<Map<String, dynamic>> maps = await db.query(infos,
-        columns: [columnId, columnWord, columnFrequency],
-        where: '$columnId = ?',
-        whereArgs: [id]);
-    if (maps.isNotEmpty) {
-      return Info.fromMap(maps.first);
-    }
-    return null;
+  // Read all items (journals)
+  static Future<List<Map<String, dynamic>>> getItems() async {
+    final db = await SQLHelper.db();
+    return db.query('infos', orderBy: "id");
   }
 
-  Future<List<Word>?> queryAllWords() async {
-    Database db = await database;
-    List<Map<String, dynamic>> maps = await db.query(infos);
-    if (maps.length > 0) {
-      List<Word> words = [];
-      maps.forEach((map) => words.add(Word.fromMap(map)));
-      return words;
-    }
-    return null;
+  // Read a single item by id
+  // The app doesn't use this method but I put here in case you want to see it
+  static Future<List<Map<String, dynamic>>> getItem(int id) async {
+    final db = await SQLHelper.db();
+    return db.query('infos', where: "id = ?", whereArgs: [id], limit: 1);
   }
-*/
-  Future<int> deleteWord(int id) async {
-    Database db = await database;
-    return await db.delete(infos, where: '$columnId = ?', whereArgs: [id]);
+
+  // Update an item by id
+  static Future<int> updateItem(
+      int id, String idade, String? altura, String peso, String sexo) async {
+    final db = await SQLHelper.db();
+
+    final data = {
+      'idade': idade,
+      'altura': altura,
+      'peso': peso,
+      'sexo': sexo,
+      'createdAt': DateTime.now().toString()
+    };
+
+    final result =
+        await db.update('infos', data, where: "id = ?", whereArgs: [id]);
+    return result;
+  }
+
+  // Delete
+  static Future<void> deleteItem(int id) async {
+    final db = await SQLHelper.db();
+    try {
+      await db.delete("infos", where: "id = ?", whereArgs: [id]);
+    } catch (err) {
+      debugPrint("Something went wrong when deleting an item: $err");
+    }
   }
 }
