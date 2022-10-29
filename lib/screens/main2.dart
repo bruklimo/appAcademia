@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:trabalho01/screens/tela_monta_dieta.dart';
 import 'package:trabalho01/screens/tela_maps.dart';
 
+import 'mostraBD.dart';
+
 void main() => runApp(const MyApp2());
 
 class MyApp2 extends StatelessWidget {
@@ -19,12 +21,13 @@ class MyApp2 extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: DefaultTabController(
-        length: 3,
+        length: 4,
         child: Scaffold(
           appBar: AppBar(
             bottom: const TabBar(tabs: [
               Tab(icon: Icon(Icons.sports_gymnastics_outlined)),
               Tab(icon: Icon(Icons.sports_gymnastics_rounded)),
+              Tab(icon: Icon(Icons.sports_gymnastics_sharp)),
               Tab(icon: Icon(Icons.sports_gymnastics_sharp)),
             ]),
             title: const Text("App Academia"),
@@ -34,6 +37,7 @@ class MyApp2 extends StatelessWidget {
               LoginScreen(),
               MontaDieta(),
               MontaTreino(),
+              HomePage(),
             ],
           ),
         ),

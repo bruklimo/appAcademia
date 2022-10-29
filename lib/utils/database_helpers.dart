@@ -60,7 +60,6 @@ class SQLHelper {
       'altura': altura,
       'peso': peso,
       'sexo': sexo,
-      'createdAt': DateTime.now().toString()
     };
 
     final result =
