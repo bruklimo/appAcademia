@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         // Remove the debug banner
         debugShowCheckedModeBanner: false,
-        title: 'Kindacode.com',
+        title: 'Mostra Infos',
         theme: ThemeData(
           primarySwatch: Colors.orange,
         ),
@@ -132,7 +132,7 @@ class _HomePageState extends State<HomePage> {
                       // Close the bottom sheet
                       Navigator.of(context).pop();
                     },
-                    child: Text(id == null ? 'Create New' : 'Update'),
+                    child: Text(id == null ? 'Criar Novo' : 'Atualizar'),
                   )
                 ],
               ),
@@ -157,7 +157,7 @@ class _HomePageState extends State<HomePage> {
   void _deleteItem(int id) async {
     await SQLHelper.deleteItem(id);
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-      content: Text('Successfully deleted a journal!'),
+      content: Text('Deletado com sucesso!'),
     ));
     _refreshJournals();
   }
@@ -166,7 +166,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Kindacode.com'),
+        title: const Text('Mostra Infos'),
       ),
       body: _isLoading
           ? const Center(
