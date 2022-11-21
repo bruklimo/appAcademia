@@ -1,3 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:trabalho01/model/user.dart';
 import 'package:email_validator/email_validator.dart';
@@ -9,35 +12,45 @@ class MontaDieta extends StatefulWidget {
   State<MontaDieta> createState() => CompleteFormState();
 }
 
-final titles = ["Selecione a sua dieta", "Dieta 1", "Dieta 2", "Dieta 3"];
-final subtitles = ["Clique abaixo", "2600 kcal", "2000 kcal", "1500 kcal"];
-final icons = [
-  Icons.sports_gymnastics,
-  Icons.sports_gymnastics,
-  Icons.sports_gymnastics,
-  Icons.sports_gymnastics,
-];
+final db = FirebaseFirestore.instance;
+
+final infos = db
+    .collection("infos")
+    .where("email", isEqualTo: FirebaseAuth.instance.currentUser!.email!);
 
 class CompleteFormState extends State<MontaDieta> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final User _newUser = User();
 
+  final db = FirebaseFirestore.instance;
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-        separatorBuilder: (BuildContext context, int index) => const Divider(),
-        itemCount: titles.length,
-        itemBuilder: (context, index) {
-          return Card(
-              child: ListTile(
-                  title: Text(titles[index]),
-                  subtitle: Text(subtitles[index]),
-                  leading: CircleAvatar(
-                      child: Image.asset(
-                    'assets/images/arnold.png',
-                    width: 200,
-                  )),
-                  trailing: Icon(icons[index])));
-        });
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Treino Personalizado"),
+        centerTitle: true,
+      ),
+      body: StreamBuilder<QuerySnapshot>(
+        stream: db.collection('treinos').snapshots(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          } else
+            return ListView(
+              children: snapshot.data!.docs.map((doc) {
+                return Card(
+                  child: ListTile(
+                    title: Text(doc.data().toString()),
+                  ),
+                );
+              }).toList(),
+            );
+        },
+      ),
+    );
   }
 }
+
+
+//  title: Text(doc.data()['title']),

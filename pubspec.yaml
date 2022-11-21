@@ -49,6 +49,8 @@ dependencies:
   google_sign_in:
   sqflite: any
   path_provider: any
+  location: any
+  cloud_firestore: 
 
 dev_dependencies:
   flutter_test:

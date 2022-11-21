@@ -15,6 +15,7 @@ class LoginScreen extends StatefulWidget {
 String? _character;
 List<Map<String, dynamic>> _journals = [];
 bool _isLoading = true;
+String user = FirebaseAuth.instance.currentUser.toString();
 
 class CompleteFormState extends State<LoginScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -34,7 +35,8 @@ class CompleteFormState extends State<LoginScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            const Text("Gostaríamos de saber algumas informações sobre você:\n",
+            Text(
+                "Olá $user, \nGostaríamos de saber algumas informações sobre você:\n",
                 style: TextStyle(fontSize: 20, fontFamily: 'Arial')),
             TextField(
               controller: idadeController,

@@ -13,13 +13,24 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) =>
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            backgroundColor: Colors.blue,
+            duration: const Duration(seconds: 10),
+            content: Text('Para realizar login selecione o ícone do Gmail'))));
+  }
+
+  @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
 
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text("Google Login"),
+        title: const Text("App Academia"),
         backgroundColor: Colors.blue,
       ),
       body: Container(
@@ -34,14 +45,12 @@ class _LoginPageState extends State<LoginPage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text("Olá, \nClique no ícone para realizar login",
-                style: TextStyle(fontSize: 20, fontFamily: 'Arial')),
             GestureDetector(
                 onTap: () {
                   AuthService().signInWithGoogle();
                 },
                 child: const Image(
-                    width: 100, image: AssetImage('assets/google.png'))),
+                    width: 100, image: AssetImage('assets/gmail.png'))),
           ],
         ),
       ),

@@ -21,7 +21,7 @@ class _HomePageState extends State<HomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              FirebaseAuth.instance.currentUser!.displayName!,
+              FirebaseAuth.instance.currentUser.toString(),
               style: const TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
@@ -31,7 +31,7 @@ class _HomePageState extends State<HomePage> {
               height: 10,
             ),
             Text(
-              FirebaseAuth.instance.currentUser!.email!,
+              FirebaseAuth.instance.currentUser.toString(),
               style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
