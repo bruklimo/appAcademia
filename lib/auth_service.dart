@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:trabalho01/screens/main2.dart';
-import 'package:trabalho01/screens/preCadastro.dart';
+import 'package:trabalho01/screens/tela_monta_dieta.dart';
 
 import 'home_page.dart';
 import 'login_page.dart';
@@ -15,7 +15,7 @@ class AuthService {
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (BuildContext context, snapshot) {
           if (snapshot.hasData) {
-            return MyApp3();
+            return MyApp2();
           } else {
             return const LoginPage();
           }

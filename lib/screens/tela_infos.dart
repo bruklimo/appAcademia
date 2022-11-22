@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:trabalho01/model/user.dart';
@@ -5,11 +6,11 @@ import 'package:email_validator/email_validator.dart';
 import 'package:trabalho01/utils/database_helpers.dart';
 import 'dart:developer';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class TelaInfos extends StatefulWidget {
+  const TelaInfos({super.key});
 
   @override
-  State<LoginScreen> createState() => CompleteFormState();
+  State<TelaInfos> createState() => CompleteFormState();
 }
 
 String? _character;
@@ -17,7 +18,7 @@ List<Map<String, dynamic>> _journals = [];
 bool _isLoading = true;
 String user = FirebaseAuth.instance.currentUser.toString();
 
-class CompleteFormState extends State<LoginScreen> {
+class CompleteFormState extends State<TelaInfos> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   TextEditingController idadeController = new TextEditingController();
@@ -28,103 +29,81 @@ class CompleteFormState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 20.0, right: 20),
-      child: Form(
-        key: _formKey,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-                "Olá $user, \nGostaríamos de saber algumas informações sobre você:\n",
-                style: TextStyle(fontSize: 20, fontFamily: 'Arial')),
-            TextField(
-              controller: idadeController,
-              decoration: InputDecoration(
-                labelText: "Idade", //babel text
-                border: OutlineInputBorder(),
-                hintText: 'Digite sua idade',
-              ),
+    // Build a Form widget using the _formKey created above.
+    return Form(
+      key: _formKey,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          TextFormField(
+            controller: pesoController,
+            decoration: const InputDecoration(
+              icon: const Icon(Icons.line_weight),
+              hintText: 'Adicione o seu peso',
+              labelText: 'Peso (KG)',
             ),
-            TextField(
-              controller: alturaController,
-              decoration: InputDecoration(
-                labelText: "Altura", //babel text
-                border: OutlineInputBorder(),
-                hintText: 'Digite sua altura',
-              ),
+            validator: (value) {
+              if (value!.isEmpty) {
+                return 'Adicione o seu peso';
+              }
+              return null;
+            },
+          ),
+          TextFormField(
+            controller: alturaController,
+            decoration: const InputDecoration(
+              icon: const Icon(Icons.height),
+              hintText: 'Adicione a sua altura',
+              labelText: 'Altura',
             ),
-            TextField(
-              controller: pesoController,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: "Peso", //babel text
-                hintText: 'Digite seu peso',
-              ),
+            validator: (value) {
+              if (value!.isEmpty) {
+                return 'Adicione a sua altura';
+              }
+              return null;
+            },
+          ),
+          TextFormField(
+            controller: idadeController,
+            decoration: const InputDecoration(
+              icon: const Icon(Icons.calendar_today),
+              hintText: 'Adicione a sua idade',
+              labelText: 'Idade',
             ),
-            const Text(
-              'Selecione seu sexo:\n',
-              style: TextStyle(fontSize: 20, fontFamily: 'Arial'),
-            ),
-            ListTile(
-              title: const Text('Masculino'),
-              leading: Radio<String>(
-                value: "Masculino",
-                groupValue: _character,
-                onChanged: (value) {
-                  setState(() {
-                    _character = value;
-                  });
-                },
-              ),
-            ),
-            ListTile(
-              title: const Text('Feminino'),
-              leading: Radio<String>(
-                value: "Feminino",
-                groupValue: _character,
-                onChanged: (value) {
-                  setState(() {
-                    _character = value;
-                  });
-                },
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16.0),
-              child: Row(children: [
-                ElevatedButton(
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      _formKey.currentState?.save();
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          backgroundColor: Colors.blue,
-                          duration: const Duration(seconds: 10),
-                          content: Text(
-                              "Bem vindo!\nSeu sexo é  ${_character.toString().characters}"),
-                          action: SnackBarAction(
-                              label: "HomePage",
-                              onPressed: () {
-                                //vai pra tela inicial
-                              }),
-                        ),
-                      );
+            validator: (value) {
+              if (value!.isEmpty) {
+                return 'Adicione a sua idade';
+              }
+              return null;
+            },
+          ),
+          Container(
+              padding: EdgeInsets.only(left: 150.0, top: 40.0),
+              child: ElevatedButton(
+                child: Text('Feito'),
+                onPressed: () {
+                  // It returns true if the form is valid, otherwise returns false
+                  if (_formKey.currentState!.validate()) {
+                    int peso = int.parse(pesoController.text);
+                    String treino = "";
+                    if (peso == 70) {
+                      treino = "Rosca direta 10x";
                     }
-                    _addItem();
-                  },
-                  child: const Text('Monta treino'),
-                ),
-                //    ElevatedButton(
-                //    onPressed: () {
-                //       //vai pra pagina de cadastro
-                //    },
-                //   child: const Text('Cadastrar'),
-                //   ),
-              ]),
-            )
-          ],
-        ),
+
+                    FirebaseFirestore.instance.collection('infos').add({
+                      'peso': pesoController.text,
+                      'altura': alturaController.text,
+                      'idade': idadeController.text,
+                      'email': FirebaseAuth.instance.currentUser!.email!,
+                      'nome': FirebaseAuth.instance.currentUser!.displayName!,
+                      'treino': treino
+                    });
+                    //   Navigator.of(context).push(
+                    //     MaterialPageRoute(builder: (context) => MyApp2()));
+                  }
+                },
+              )),
+        ],
       ),
     );
   }

@@ -21,21 +21,19 @@ class MyApp2 extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: DefaultTabController(
-        length: 3,
+        length: 2,
         child: Scaffold(
           appBar: AppBar(
             bottom: const TabBar(tabs: [
               Tab(icon: Icon(Icons.sports_gymnastics_outlined)),
               Tab(icon: Icon(Icons.sports_gymnastics_rounded)),
-              Tab(icon: Icon(Icons.sports_gymnastics_sharp)),
             ]),
             title: const Text("App Academia"),
           ),
           body: const TabBarView(
             children: [
-              LoginScreen(),
-              MontaDieta(),
-              MontaTreino(),
+              TelaInfos(),
+              MostraMaps(),
             ],
           ),
         ),

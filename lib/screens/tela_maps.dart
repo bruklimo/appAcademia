@@ -5,14 +5,14 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'dart:ui' as ui;
 
-class MontaTreino extends StatefulWidget {
-  const MontaTreino({Key? key}) : super(key: key);
+class MostraMaps extends StatefulWidget {
+  const MostraMaps({Key? key}) : super(key: key);
 
   @override
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<MontaTreino> {
+class _HomePageState extends State<MostraMaps> {
   Uint8List? marketimages;
   List<String> images = [
     'assets/gym.png',
