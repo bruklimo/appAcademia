@@ -51,6 +51,7 @@ dependencies:
   path_provider: any
   location: any
   cloud_firestore: 
+  flutter_speed_dial: ^6.2.0
 
 dev_dependencies:
   flutter_test:

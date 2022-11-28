@@ -16,7 +16,7 @@ class TelaInfos extends StatefulWidget {
 String? _character;
 List<Map<String, dynamic>> _journals = [];
 bool _isLoading = true;
-String user = FirebaseAuth.instance.currentUser.toString();
+String user = FirebaseAuth.instance.currentUser!.email.toString();
 
 class CompleteFormState extends State<TelaInfos> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -84,20 +84,7 @@ class CompleteFormState extends State<TelaInfos> {
                 onPressed: () {
                   // It returns true if the form is valid, otherwise returns false
                   if (_formKey.currentState!.validate()) {
-                    int peso = int.parse(pesoController.text);
-                    String treino = "";
-                    if (peso == 70) {
-                      treino = "Rosca direta 10x";
-                    }
-
-                    FirebaseFirestore.instance.collection('infos').add({
-                      'peso': pesoController.text,
-                      'altura': alturaController.text,
-                      'idade': idadeController.text,
-                      'email': FirebaseAuth.instance.currentUser!.email!,
-                      'nome': FirebaseAuth.instance.currentUser!.displayName!,
-                      'treino': treino
-                    });
+                    _addItem();
                     //   Navigator.of(context).push(
                     //     MaterialPageRoute(builder: (context) => MyApp2()));
                   }
@@ -131,13 +118,19 @@ class CompleteFormState extends State<TelaInfos> {
 
   // Insert a new journal to the database
   Future<void> _addItem() async {
+    int peso = int.parse(pesoController.text);
+    String treino = "";
+    if (peso == 70) {
+      treino = "Rosca direta 10x";
+    }
+
     await SQLHelper.createItem(idadeController.text, alturaController.text,
-        pesoController.text, _character.toString().characters.toString());
+        pesoController.text, user, treino, treino);
     _refreshJournals();
   }
 
   void _refreshJournals() async {
-    final data = await SQLHelper.getItems();
+    final data = await SQLHelper.getItem(user);
     setState(() {
       _journals = data;
       _isLoading = false;

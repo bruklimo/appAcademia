@@ -16,6 +16,7 @@ class MyApp2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'App Academia',
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -25,14 +26,14 @@ class MyApp2 extends StatelessWidget {
         child: Scaffold(
           appBar: AppBar(
             bottom: const TabBar(tabs: [
-              Tab(icon: Icon(Icons.sports_gymnastics_outlined)),
-              Tab(icon: Icon(Icons.sports_gymnastics_rounded)),
+              Tab(icon: Icon(Icons.sports_gymnastics)),
+              Tab(icon: Icon(Icons.map_sharp)),
             ]),
             title: const Text("App Academia"),
           ),
           body: const TabBarView(
             children: [
-              TelaInfos(),
+              MyApp(),
               MostraMaps(),
             ],
           ),

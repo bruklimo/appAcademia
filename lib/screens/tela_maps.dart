@@ -82,6 +82,7 @@ class _HomePageState extends State<MostraMaps> {
         backgroundColor: Colors.blue,
         // on below line we have given title of app
         title: Text("Academias Próximas"),
+        toolbarHeight: 20,
       ),
       body: Container(
         child: SafeArea(

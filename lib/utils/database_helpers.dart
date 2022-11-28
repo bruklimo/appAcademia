@@ -8,7 +8,9 @@ class SQLHelper {
         idade TEXT,
         altura TEXT,
         peso TEXT,
-        sexo TEXT
+        email TEXT,
+        treino TEXT,
+        obs TEXT
       )
       """);
   }
@@ -18,7 +20,7 @@ class SQLHelper {
 
   static Future<sql.Database> db() async {
     return sql.openDatabase(
-      'kindacode.db',
+      'infos.db',
       version: 1,
       onCreate: (sql.Database database, int version) async {
         await createTables(database);
@@ -27,11 +29,18 @@ class SQLHelper {
   }
 
   // Create new item (journal)
-  static Future<int> createItem(
-      String idade, String? altura, String peso, String sexo) async {
+  static Future<int> createItem(String idade, String? altura, String peso,
+      String email, String treino, String obs) async {
     final db = await SQLHelper.db();
 
-    final data = {'idade': idade, 'altura': altura, 'peso': peso, 'sexo': sexo};
+    final data = {
+      'idade': idade,
+      'altura': altura,
+      'peso': peso,
+      'email': email,
+      'treino': treino,
+      'obs': obs
+    };
     final id = await db.insert('infos', data,
         conflictAlgorithm: sql.ConflictAlgorithm.replace);
     return id;
@@ -43,23 +52,23 @@ class SQLHelper {
     return db.query('infos', orderBy: "id");
   }
 
-  // Read a single item by id
+  // Read a single item by email
   // The app doesn't use this method but I put here in case you want to see it
-  static Future<List<Map<String, dynamic>>> getItem(int id) async {
+  static Future<List<Map<String, dynamic>>> getItem(String email) async {
     final db = await SQLHelper.db();
-    return db.query('infos', where: "id = ?", whereArgs: [id], limit: 1);
+    return db.query('infos',
+        where: "email = ?", whereArgs: [email], limit: 100);
   }
 
   // Update an item by id
   static Future<int> updateItem(
-      int id, String idade, String? altura, String peso, String sexo) async {
+      int id, String idade, String? altura, String peso) async {
     final db = await SQLHelper.db();
 
     final data = {
       'idade': idade,
       'altura': altura,
       'peso': peso,
-      'sexo': sexo,
     };
 
     final result =
