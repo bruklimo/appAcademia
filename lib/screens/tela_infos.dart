@@ -1,6 +1,7 @@
 // main.dart
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_navigation/src/routes/default_transitions.dart';
 import 'package:trabalho01/utils/database_helpers.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
@@ -52,7 +53,8 @@ class _HomePageState extends State<HomePage> {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             backgroundColor: Colors.blue,
             duration: const Duration(seconds: 10),
-            content: Text('Para criar um treino, clique no botão abaixo'))));
+            content: Text(
+                'Para criar um treino, clique no botão ao lado e insira seus dados'))));
 
     _refreshJournals(); // Loading the diary when the app starts
   }
@@ -61,7 +63,6 @@ class _HomePageState extends State<HomePage> {
   final TextEditingController _alturaController = new TextEditingController();
   final TextEditingController _pesoController = new TextEditingController();
   String? tipoTreino;
-
   // This function will be triggered when the floating button is pressed
   // It will also be triggered when you want to update an item
   void _showForm(int? id) async {
@@ -74,6 +75,16 @@ class _HomePageState extends State<HomePage> {
       _alturaController.text = existingJournal['altura'];
       _pesoController.text = existingJournal['peso'];
     }
+
+    // Initial Selected Value
+    String dropdownvalue = 'perna';
+    tipoTreino = 'perna';
+
+    // List of items in our dropdown menu
+    var items = [
+      'perna',
+      'braço',
+    ];
 
     showModalBottomSheet(
         context: context,
@@ -91,7 +102,8 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     TextField(
                       controller: _idadeController,
-                      decoration: const InputDecoration(hintText: 'Idade'),
+                      decoration:
+                          const InputDecoration(hintText: 'Idade (anos)'),
                     ),
                     const SizedBox(
                       height: 10,
@@ -99,7 +111,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                     TextField(
                       controller: _alturaController,
-                      decoration: const InputDecoration(hintText: 'Altura'),
+                      decoration: const InputDecoration(hintText: 'Altura (m)'),
                     ),
                     const SizedBox(
                       height: 10,
@@ -107,33 +119,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                     TextField(
                       controller: _pesoController,
-                      decoration: const InputDecoration(hintText: 'Peso'),
-                    ),
-                    Expanded(
-                      flex: 4,
-                      child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: <Widget>[
-                            RadioListTile(
-                                title: const Text("Perna"),
-                                value: "perna",
-                                groupValue: tipoTreino,
-                                onChanged: (value) {
-                                  setState(() {
-                                    tipoTreino = value.toString();
-                                  });
-                                }),
-                            RadioListTile(
-                                title: const Text("Braço"),
-                                value: "braço",
-                                groupValue: tipoTreino,
-                                onChanged: (value) {
-                                  setState(() {
-                                    tipoTreino = value.toString();
-                                  });
-                                }),
-                          ]),
+                      decoration: const InputDecoration(hintText: 'Peso (kg)'),
                     ),
                     const SizedBox(
                       height: 10,
@@ -142,6 +128,30 @@ class _HomePageState extends State<HomePage> {
                     const SizedBox(
                       height: 10,
                       width: 20,
+                    ),
+                    const Text("Tipo  de treino"),
+                    DropdownButton(
+                      // Initial Value
+                      value: dropdownvalue,
+
+                      // Down Arrow Icon
+                      icon: const Icon(Icons.keyboard_arrow_down),
+
+                      // Array list of items
+                      items: items.map((String items) {
+                        return DropdownMenuItem(
+                          value: items,
+                          child: Text(items),
+                        );
+                      }).toList(),
+                      // After selecting the desired option,it will
+                      // change button value to selected value
+                      onChanged: (String? newValue) async {
+                        setState(() async {
+                          dropdownvalue = newValue!;
+                          tipoTreino = newValue;
+                        });
+                      },
                     ),
                     ElevatedButton(
                       onPressed: () async {
@@ -172,16 +182,64 @@ class _HomePageState extends State<HomePage> {
 
 // Insert a new journal to the database
   Future<void> _addItem() async {
-    int peso = int.parse(_pesoController.text);
+    double peso = double.parse(_pesoController.text);
+    double altura = double.parse(_alturaController.text);
     String treino = "";
     String obs = "";
-    if (peso == 70 && tipoTreino == "perna") {
-      treino = "Leg press";
-      obs = "Repetições: 3x10, Peso ideal: 30kg";
-    } else if (peso == 70 && tipoTreino == "braço") {
-      treino = "Rosca direta";
-      obs = "Repetições: 3x10, Peso ideal: 20kg";
+//IMC = Peso ÷ (Altura × Altura)
+
+    double imc = peso / (altura * 2);
+
+    print(imc);
+
+    // novos
+
+    if (imc >= 18.5 && imc <= 24.9) {
+      if (tipoTreino == "perna") {
+        treino = "Leg press";
+        obs = "Repetições: 3x10, Peso ideal: 30kg";
+      } else if (tipoTreino == "braço") {
+        treino = "Rosca direta";
+        obs = "Repetições: 3x10, Peso ideal: 20kg";
+      }
+    } else if (imc >= 25.0 && imc <= 29.9) {
+      if (tipoTreino == "perna") {
+        treino = "Cadeira extensora";
+        obs = "Repetições: 3x10, Peso ideal: 50kg";
+      } else if (tipoTreino == "braço") {
+        treino = "Supino inclinado";
+        obs = "Repetições: 3x10, Peso ideal: 40kg";
+      }
+    } else if (imc >= 30.0 && imc <= 34.9) {
+      if (tipoTreino == "perna") {
+        treino = "Cadeira flexora";
+        obs = "Repetições: 3x10, Peso ideal: 45kg";
+      } else if (tipoTreino == "braço") {
+        treino = "Elevação lateral";
+        obs = "Repetições: 3x10, Peso ideal: 10kg";
+      }
+    } else if (imc >= 35.0 && imc <= 39.9) {
+      if (tipoTreino == "perna") {
+        treino = "Stiff";
+        obs = "Repetições: 3x10, Peso ideal: 15kg";
+      } else if (tipoTreino == "braço") {
+        treino = "Coice Triceps";
+        obs = "Repetições: 3x10, Peso ideal: 25kg";
+      }
+    } else if (imc >= 40.0) {
+      if (tipoTreino == "perna") {
+        treino = "Panturrilha sentada";
+        obs = "Repetições: 3x10, Peso ideal: 30kg";
+      } else if (tipoTreino == "braço") {
+        treino = "Elevação fronta";
+        obs = "Repetições: 3x10, Peso ideal: 15kg";
+      }
     }
+
+    // velhos
+
+    //idosos
+
     await SQLHelper.createItem(_idadeController.text, _alturaController.text,
         _pesoController.text, user, treino, obs);
     _refreshJournals();

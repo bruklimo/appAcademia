@@ -16,6 +16,11 @@ class _HomePageState extends State<MostraMaps> {
   Uint8List? marketimages;
   List<String> images = [
     'assets/gym.png',
+    'assets/gym.png',
+    'assets/gym.png',
+    'assets/gym.png',
+    'assets/gym.png',
+    'assets/gym.png',
   ];
 
   // created empty list of markers
@@ -27,6 +32,10 @@ class _HomePageState extends State<MostraMaps> {
   final List<LatLng> _latLen = <LatLng>[
     LatLng(-22.851260, -47.070230),
     LatLng(-22.851200, -47.066850),
+    LatLng(-22.854620, -47.057411),
+    LatLng(-22.849770, -47.050590),
+    LatLng(-22.855630, -47.051650),
+    LatLng(-22.840710, -47.052120),
   ];
 
   late GoogleMapController _controller;

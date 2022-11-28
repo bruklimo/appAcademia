@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:trabalho01/login_page.dart';
 
 import '../screens/main2.dart';
 
@@ -13,7 +14,7 @@ class Authentication {
           if (snapshot.hasData) {
             return MyApp2();
           } else {
-            return const MyApp2();
+            return const LoginPage();
           }
         });
   }
@@ -38,7 +39,10 @@ class Authentication {
   }
 
   //Sign out
-  signOut() {
-    FirebaseAuth.instance.signOut();
+  signOut() async {
+    await FirebaseAuth.instance.signOut();
+    final GoogleSignInAccount? googleUser =
+        await GoogleSignIn(scopes: <String>["email"]).signOut();
+    return new LoginPage();
   }
 }

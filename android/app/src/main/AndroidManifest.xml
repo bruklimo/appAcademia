@@ -7,7 +7,7 @@
 
    <application
         
-        android:label="app academia"
+        android:label="Gym App"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
