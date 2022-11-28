@@ -1,10 +1,11 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:trabalho01/screens/main2.dart';
-import 'package:trabalho01/screens/tela_monta_dieta.dart';
-
 import 'home_page.dart';
 import 'login_page.dart';
 
@@ -42,7 +43,8 @@ class AuthService {
   }
 
   //Sign out
-  signOut() {
+  signOut() async {
     FirebaseAuth.instance.signOut();
+    FirebaseAuth.instance.userChanges();
   }
 }

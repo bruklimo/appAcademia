@@ -26,6 +26,7 @@ class _HomePageState extends State<MostraMaps> {
   // created list of coordinates of various locations
   final List<LatLng> _latLen = <LatLng>[
     LatLng(-22.851260, -47.070230),
+    LatLng(-22.851200, -47.066850),
   ];
 
   late GoogleMapController _controller;

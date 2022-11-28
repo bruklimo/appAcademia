@@ -3,10 +3,7 @@ import 'package:trabalho01/screens/tela_leo.dart';
 import 'package:trabalho01/screens/tela_bruno.dart';
 import 'package:trabalho01/screens/tela_infos.dart';
 import 'package:flutter/material.dart';
-import 'package:trabalho01/screens/tela_monta_dieta.dart';
 import 'package:trabalho01/screens/tela_maps.dart';
-
-import 'mostraBD.dart';
 
 void main() => runApp(const MyApp2());
 
@@ -33,7 +30,7 @@ class MyApp2 extends StatelessWidget {
           ),
           body: const TabBarView(
             children: [
-              MyApp(),
+              Treinos(),
               MostraMaps(),
             ],
           ),
