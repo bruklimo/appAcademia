@@ -14,7 +14,7 @@ class MyApp2 extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'App Academia',
+      title: 'Gym App',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -26,7 +26,7 @@ class MyApp2 extends StatelessWidget {
               Tab(icon: Icon(Icons.sports_gymnastics)),
               Tab(icon: Icon(Icons.map_sharp)),
             ]),
-            title: const Text("App Academia"),
+            title: const Text("Gym App"),
           ),
           body: const TabBarView(
             children: [

@@ -30,7 +30,7 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text("App Academia"),
+        title: const Text("Gym App"),
         backgroundColor: Colors.blue,
       ),
       body: Container(
@@ -45,6 +45,14 @@ class _LoginPageState extends State<LoginPage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
+            Text(
+              "Seja bem vindo!",
+              style: TextStyle(
+                fontSize: 38,
+                height: 0.9, //line height 90% of actual height
+                color: Colors.blue,
+              ),
+            ),
             GestureDetector(
                 onTap: () {
                   AuthService().signInWithGoogle();

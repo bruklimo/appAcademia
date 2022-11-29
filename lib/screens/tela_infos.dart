@@ -81,9 +81,10 @@ class _HomePageState extends State<HomePage> {
     tipoTreino = 'perna';
 
     // List of items in our dropdown menu
-    var items = [
-      'perna',
-      'braço',
+
+    List<DropdownMenuItem<String>> items = [
+      DropdownMenuItem(child: Text("Perna"), value: "perna"),
+      DropdownMenuItem(child: Text("Braço"), value: "braço"),
     ];
 
     showModalBottomSheet(
@@ -125,34 +126,30 @@ class _HomePageState extends State<HomePage> {
                       height: 10,
                       width: 20,
                     ),
-                    const SizedBox(
-                      height: 10,
-                      width: 20,
-                    ),
-                    const Text("Tipo  de treino"),
-                    DropdownButton(
-                      // Initial Value
-                      value: dropdownvalue,
-
-                      // Down Arrow Icon
-                      icon: const Icon(Icons.keyboard_arrow_down),
-
-                      // Array list of items
-                      items: items.map((String items) {
-                        return DropdownMenuItem(
-                          value: items,
-                          child: Text(items),
-                        );
-                      }).toList(),
-                      // After selecting the desired option,it will
-                      // change button value to selected value
-                      onChanged: (String? newValue) async {
-                        setState(() async {
-                          dropdownvalue = newValue!;
-                          tipoTreino = newValue;
-                        });
-                      },
-                    ),
+                    DropdownButtonFormField(
+                        decoration: InputDecoration(
+                          enabledBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: Colors.blue, width: 1),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          border: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: Colors.blue, width: 1),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          filled: true,
+                          fillColor: Colors.blueAccent,
+                        ),
+                        dropdownColor: Colors.blueAccent,
+                        hint: const Text("Selecione um treino"),
+                        value: dropdownvalue,
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            dropdownvalue = newValue!;
+                          });
+                        },
+                        items: items),
                     ElevatedButton(
                       onPressed: () async {
                         // Save new journal
