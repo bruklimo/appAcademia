@@ -499,13 +499,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.4.3"
-  masked_text_field:
+  mask_text_input_formatter:
     dependency: "direct main"
     description:
-      name: masked_text_field
+      name: mask_text_input_formatter
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.1"
+    version: "2.4.0"
   matcher:
     dependency: transitive
     description:

@@ -52,7 +52,7 @@ dependencies:
   location: any
   cloud_firestore: 
   flutter_speed_dial: ^6.2.0
-  masked_text_field: any
+  mask_text_input_formatter: ^2.4.0
 
 dev_dependencies:
   flutter_test:

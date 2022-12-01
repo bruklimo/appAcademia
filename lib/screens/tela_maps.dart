@@ -21,6 +21,11 @@ class _HomePageState extends State<MostraMaps> {
     'assets/gym.png',
     'assets/gym.png',
     'assets/gym.png',
+    'assets/gym.png',
+    'assets/gym.png',
+    'assets/gym.png',
+    'assets/gym.png',
+    'assets/gym.png',
   ];
 
   // created empty list of markers
@@ -36,6 +41,11 @@ class _HomePageState extends State<MostraMaps> {
     LatLng(-22.849770, -47.050590),
     LatLng(-22.855630, -47.051650),
     LatLng(-22.840710, -47.052120),
+    LatLng(-22.569440, -47.410150),
+    LatLng(-22.546050, -47.420610),
+    LatLng(-22.582090, -47.400970),
+    LatLng(-22.584560, -47.421590),
+    LatLng(-22.555960, -47.407420),
   ];
 
   late GoogleMapController _controller;

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/routes/default_transitions.dart';
 import 'package:trabalho01/utils/database_helpers.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 import '../utils/authentication.dart';
 
@@ -59,6 +60,16 @@ class _HomePageState extends State<HomePage> {
     _refreshJournals(); // Loading the diary when the app starts
   }
 
+  var maskPeso = new MaskTextInputFormatter(
+      mask: '###.##',
+      filter: {"#": RegExp(r'[0-9]')},
+      type: MaskAutoCompletionType.lazy);
+
+  var maskAltura = new MaskTextInputFormatter(
+      mask: '#.##',
+      filter: {"#": RegExp(r'[0-9]')},
+      type: MaskAutoCompletionType.lazy);
+
   final TextEditingController _idadeController = new TextEditingController();
   final TextEditingController _alturaController = new TextEditingController();
   final TextEditingController _pesoController = new TextEditingController();
@@ -113,6 +124,7 @@ class _HomePageState extends State<HomePage> {
                     TextField(
                       controller: _alturaController,
                       decoration: const InputDecoration(hintText: 'Altura (m)'),
+                      inputFormatters: [maskAltura],
                     ),
                     const SizedBox(
                       height: 10,
@@ -121,6 +133,7 @@ class _HomePageState extends State<HomePage> {
                     TextField(
                       controller: _pesoController,
                       decoration: const InputDecoration(hintText: 'Peso (kg)'),
+                      inputFormatters: [maskPeso],
                     ),
                     const SizedBox(
                       height: 10,
@@ -187,7 +200,8 @@ class _HomePageState extends State<HomePage> {
 
     double imc = peso / (altura * 2);
 
-    print(imc);
+    print(peso);
+    print(altura);
 
     // novos
 
